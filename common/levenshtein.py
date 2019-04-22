@@ -2,7 +2,7 @@
 # ref: https://www.python-course.eu/levenshtein_distance.php
 
 
-def lev_biased(s, t):
+def lev_biased(s, t, deletes=1, inserts=1, substitutes=1):
     """
         iterative_levenshtein(s, t) -> ldist
         ldist is the Levenshtein distance between the strings
@@ -21,7 +21,6 @@ def lev_biased(s, t):
     cols = len(t) + 1
     # biased costs, to heavily penalise deletion and substitution, and favour insertion
     # we favour insertion because we expect users to often shorthand (e.g. 'iron sword' -> 'iron straight sword')
-    deletes, inserts, substitutes = (10, 1, 10)
 
     dist = [[0 for x in range(cols)] for x in range(rows)]
     # source prefixes can be transformed into empty strings

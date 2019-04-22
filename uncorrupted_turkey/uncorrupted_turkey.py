@@ -1,25 +1,14 @@
-import json
 import random
 
 from discord import Game, Status
 from discord.ext.commands import Bot
 from common.discord_formatting import *
-from common.levenshtein import lev_biased
+from common.items import load_items, get_item
+
 
 BOT_PREFIX = ('!', '?')
 TOKEN = 'NTY5MTY3NzAyNDM4OTY5Mzg0.XLsvXQ.riryPznr8KknKGWv9CG8lNg2syQ'
 items = {}
-
-
-def load_items():
-    items = {}
-    with open('data/items.json', 'r') as f:
-        data = json.load(f)
-        for item in data['items']:
-            items[item['name']] = item
-    print("{} items loaded from file".format(len(items)))
-    return items
-
 
 client = Bot(command_prefix=BOT_PREFIX, status=Status.online, activity=Game("New World"))
 
@@ -90,27 +79,28 @@ async def hello(ctx):
 @client.command(description="Describes the queried item, e.g. try '!item steel ingot'. For now, I only know about items in the 'Refining' and 'Blacksmithing' categories. Will know more soon.",
                 brief='Describe the queried item')
 async def item(ctx, *args):
-    # TODO refactor - extract item logic into non-async method
     THRESH = 30  # if query is more than THRESH from any known items, it's probably not one we know
     global items
     message = []
     item_name = ' '.join(args).lower().strip()
+    print("Querying item: " + item_name)
     if not item_name:
         return
     if item_name == 'turkey':
-        await ctx.send(":turkey: :angry: A turkey is not an item, we are the original inhabitants of this island.")
+        await ctx.send(turkey_message(":angry: A turkey is not an item, we are the original inhabitants of this island."))
         return
     if item_name not in items:
-        best_guess = min(items.keys(), key=lambda x: lev_biased(item_name, x))
-        print("'{}' '{}' distance: {}".format(item_name, best_guess, lev_biased(item_name, best_guess)))
-        if lev_biased(item_name, best_guess) > THRESH:
-            await ctx.send(":turkey: I don't know the item: {}. Try to write the name exactly as you see it in game (not case sensitive). Also helps if you are sober. Note that I only know about items in the Refining and Blacksmithing categories right now.".format(italics(item_name)))
+        best_guess, distance = get_item(item_name, items)
+        print("'{}' '{}' distance: {}".format(item_name, best_guess, distance))
+        if distance > THRESH:
+            await ctx.send(turkey_message("I don't know the item: {}. Try to write the name as you see it in game (not case sensitive). Note that I only know about items in the Refining and Blacksmithing categories right now.".format(italics(item_name))))
             return
         else:
-            await ctx.send(":turkey: I don't know the item: {}. I'm going to go out on a turkey leg and guess you meant the item: {}?".format(italics(item_name), italics(best_guess)))
+            message.append(turkey_message("I don't know the item: {}. I'm going to go out on a turkey leg and guess you meant the item: {}?".format(italics(item_name), italics(best_guess))))
             item_name = best_guess
-    message.append(bold('Item') + ': ' + italics(item_name))
+
     item = items[item_name]
+    message.append(bold('Item') + ': ' + italics(item_name))
 
     # tier
     if 'tier' in item:

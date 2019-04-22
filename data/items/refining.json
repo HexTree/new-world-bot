@@ -1,0 +1,119 @@
+[
+{"name": "charcoal", "tier": 1, "ingredients": [
+    {"name": "wood", "quantity": 3}
+  ]
+},
+{"name": "iron ingot", "tier": 2, "skill": {"name": "Mining, Masonry & Smelting", "level": 1}, "ingredients": [
+    {"name": "iron ore", "quantity": 3}
+  ]
+},
+{"name": "steel ingot", "tier": 3, "skill": {"name": "Mining, Masonry & Smelting", "level": 3}, "ingredients": [
+    {"name": "iron ingot", "quantity": 3},
+    {"name": "oil", "quantity": 1},
+    {"name": "charcoal", "quantity": 3}
+  ]
+},
+{"name": "starmetal ingot", "tier": 4, "skill": {"name": "Mining, Masonry & Smelting", "level": 7}, "ingredients": [
+    {"name": "starmetal ore", "quantity": 3},
+    {"name": "steel ingot", "quantity": 2},
+    {"name": "oil", "quantity": 2},
+    {"name": "charcoal", "quantity": 3}
+  ]
+},
+{"name": "orichalcum ingot", "tier": 5, "skill": {"name": "Mining, Masonry & Smelting", "level": 10}, "ingredients": [
+    {"name": "orichalcum ore", "quantity": 3},
+    {"name": "starmetal ingot", "quantity": 2},
+    {"name": "azoth", "quantity": 1},
+    {"name": "charcoal", "quantity": 3}
+  ]
+},
+{"name": "silver ingot", "tier": 2, "skill": {"name": "Mining, Masonry & Smelting", "level": 1}, "ingredients": [
+    {"name": "silver ore", "quantity": 3}
+  ]
+},
+{"name": "gold ingot", "tier": 3, "skill": {"name": "Mining, Masonry & Smelting", "level": 3}, "ingredients": [
+    {"name": "gold ore", "quantity": 3}
+  ]
+},
+{"name": "platinum ingot", "tier": 4, "skill": {"name": "Mining, Masonry & Smelting", "level": 7}, "ingredients": [
+    {"name": "platinum ore", "quantity": 3}
+  ]
+},
+{"name": "timber", "tier": 2, "skill": {"name": "Logging & Carpentry", "level": 1}, "ingredients": [
+    {"name": "wood", "quantity": 3}
+  ]
+},
+{"name": "lumber", "tier": 3, "skill": {"name": "Logging & Carpentry", "level": 3}, "ingredients": [
+    {"name": "timber", "quantity": 3}
+  ]
+},
+{"name": "wyrdwood planks", "tier": 4, "skill": {"name": "Logging & Carpentry", "level": 7}, "ingredients": [
+    {"name": "wyrdwood", "quantity": 3},
+    {"name": "lumber", "quantity": 2},
+    {"name": "sandpaper", "quantity": 1}
+  ]
+},
+{"name": "ironwood planks", "tier": 5, "skill": {"name": "Logging & Carpentry", "level": 10}, "ingredients": [
+    {"name": "ironwood", "quantity": 3},
+    {"name": "wyrdwood planks", "quantity": 2},
+    {"name": "azoth", "quantity": 1},
+    {"name": "solvent", "quantity": 1}
+  ]
+},
+{"name": "stone block", "tier": 2, "skill": {"name": "Mining, Masonry & Smelting", "level": 1}, "ingredients": [
+    {"name": "stone", "quantity": 3}
+  ]
+},
+{"name": "stone brick", "tier": 3, "skill": {"name": "Mining, Masonry & Smelting", "level": 3}, "ingredients": [
+    {"name": "stone block", "quantity": 3}
+  ]
+},
+{"name": "lodestone brick", "tier": 4, "skill": {"name": "Mining, Masonry & Smelting", "level": 7}, "ingredients": [
+    {"name": "lodestone", "quantity": 3},
+    {"name": "stone brick", "quantity": 2},
+    {"name": "earth mote", "quantity": 1}
+  ]
+},
+{"name": "infused lodestone brick", "tier": 5, "skill": {"name": "Mining, Masonry & Smelting", "level": 10}, "ingredients": [
+    {"name": "lodestone brick", "quantity": 3},
+    {"name": "crystal", "quantity": 1},
+    {"name": "azoth", "quantity": 1}
+  ]
+},
+{"name": "coarse leather", "tier": 2, "skill": {"name": "Tracking, Skinning & Tanning", "level": 1}, "ingredients": [
+    {"name": "rawhide", "quantity": 3}
+  ]
+},
+{"name": "rugged leather", "tier": 3, "skill": {"name": "Tracking, Skinning & Tanning", "level": 3}, "ingredients": [
+    {"name": "coarse leather", "quantity": 3}
+  ]
+},
+{"name": "layered leather", "tier": 4, "skill": {"name": "Tracking, Skinning & Tanning", "level": 7}, "ingredients": [
+    {"name": "rugged leather", "quantity": 3},
+    {"name": "tannin", "quantity": 3}
+  ]
+},
+{"name": "infused leather", "tier": 5, "skill": {"name": "Tracking, Skinning & Tanning", "level": 10}, "ingredients": [
+    {"name": "layered leather", "quantity": 5},
+    {"name": "azoth", "quantity": 2}
+  ]
+},
+{"name": "linen", "tier": 2, "skill": {"name": "Harvesting & Weaving", "level": 1}, "ingredients": [
+    {"name": "fibers", "quantity": 15}
+  ]
+},
+{"name": "sateen", "tier": 3, "skill": {"name": "Harvesting & Weaving", "level": 3}, "ingredients": [
+    {"name": "linen", "quantity": 3}
+  ]
+},
+{"name": "silk", "tier": 4, "skill": {"name": "Harvesting & Weaving", "level": 7}, "ingredients": [
+    {"name": "sateen", "quantity": 3},
+    {"name": "silkweave", "quantity": 1}
+  ]
+},
+{"name": "infused silk", "tier": 5, "skill": {"name": "Harvesting & Weaving", "level": 10}, "ingredients": [
+    {"name": "silk", "quantity": 5},
+    {"name": "azoth", "quantity": 2}
+  ]
+}
+]
