@@ -3,6 +3,7 @@ import random
 
 from discord import Game, Status
 from discord.ext.commands import Bot
+from modules.levenshtein import lev_biased
 
 BOT_PREFIX = ('!', '?')
 TOKEN = 'NTY5MTY3NzAyNDM4OTY5Mzg0.XLsvXQ.riryPznr8KknKGWv9CG8lNg2syQ'
@@ -15,6 +16,10 @@ def bold(s):
 
 def italics(s):
     return '*' + s + '*'
+
+
+def turkey_message(s):
+    return ":turkey: " + s
 
 
 def load_items():
@@ -30,6 +35,7 @@ def load_items():
 client = Bot(command_prefix=BOT_PREFIX, status=Status.online, activity=Game("New World"))
 
 
+# EVENTS
 @client.event
 async def on_ready():
     global items
@@ -49,9 +55,10 @@ async def on_error(event_method, *args, **kwargs):
     print("Error")
 
 
-@client.command(description="Welcome message", brief="Welcome message")
-async def welcome(ctx):
-    await ctx.send(":turkey: *Signals friendly intentions*\nGreetings @everyone! I am the all-knowing Uncorrupted Turkey. Type '!help item' to see how I can assist you with crafting.")
+# COMMANDS
+@client.command(description="for dev use", brief="for dev use")
+async def debug(ctx):
+    pass
 
 
 @client.command(description="unstuck", brief="unstuck")
@@ -69,9 +76,9 @@ async def on_message(message):
     if message.author.bot:
         return
     if 'turkey' in message.content:
-        await message.channel.send(':turkey: {}'.format(random.choice(sentences)))
+        await message.channel.send(turkey_message(random.choice(sentences)))
     elif 'tukey' in message.content:
-        await message.channel.send(":turkey: :disappointed: Hey! It is spelled 'turkey'.")
+        await message.channel.send(turkey_message(":disappointed: Hey! It is spelled 'turkey'."))
     await client.process_commands(message)
 
 
@@ -85,23 +92,34 @@ async def hello(ctx):
         "We need more Wyrdwood.",
         "My feathers are Exquisite.",
         "Drink plenty of fluids.",
-        "I have 86.7% corruption resistance."
+        "I have 86.7% corruption resistance.",
+        "Gobble Gobble."
     ]
-    await ctx.send(":turkey: Hello {}! {}".format(str(ctx.message.author)[:str(ctx.message.author).find('#')], random.choice(tips)))
+    await ctx.send(":turkey: *Signals friendly intentions*\nHello {}! I am the all-knowing Uncorrupted Turkey. Type '!help item' to see how I can assist you with crafting. \n{}".format(str(ctx.message.author)[:str(ctx.message.author).find('#')], random.choice(tips)))
 
 
-@client.command(description="Describes the queried item, e.g. try '!item steel ingot'. Try to use the item name exactly as written in the game (later I'll be able to make best-guess estimates). For now, I only know about items in the 'Refining' and 'Blacksmithing' categories. Will know more soon.",
+@client.command(description="Describes the queried item, e.g. try '!item steel ingot'. For now, I only know about items in the 'Refining' and 'Blacksmithing' categories. Will know more soon.",
                 brief='Describe the queried item')
 async def item(ctx, *args):
+    # TODO refactor - extract item logic into non-async method
+    THRESH = 30  # if query is more than THRESH from any known items, it's probably not one we know
     global items
     message = []
-    item_name = ' '.join(args).lower()
+    item_name = ' '.join(args).lower().strip()
+    if not item_name:
+        return
     if item_name == 'turkey':
-        await ctx.send(":angry: A turkey is not an item, we are the original inhabitants of this island.")
+        await ctx.send(":turkey: :angry: A turkey is not an item, we are the original inhabitants of this island.")
         return
     if item_name not in items:
-        await ctx.send("I don't know the item: {}. Try to write the name exactly as you see it in game (not case sensitive). You may also have to specify the full material qualifiers, e.g. 'leather' won't work, but 'rugged leather' will. Note that I only know about items in the Refining and Blacksmithing categories right now.".format(italics(item_name)))
-        return
+        best_guess = min(items.keys(), key=lambda x: lev_biased(item_name, x))
+        print("'{}' '{}' distance: {}".format(item_name, best_guess, lev_biased(item_name, best_guess)))
+        if lev_biased(item_name, best_guess) > THRESH:
+            await ctx.send(":turkey: I don't know the item: {}. Try to write the name exactly as you see it in game (not case sensitive). Also helps if you are sober. Note that I only know about items in the Refining and Blacksmithing categories right now.".format(italics(item_name)))
+            return
+        else:
+            await ctx.send(":turkey: I don't know the item: {}. I'm going to go out on a turkey leg and guess you meant the item: {}?".format(italics(item_name), italics(best_guess)))
+            item_name = best_guess
     message.append(bold('Item') + ': ' + italics(item_name))
     item = items[item_name]
 
@@ -112,6 +130,9 @@ async def item(ctx, *args):
     # skill required
     if 'skill' in item:
         message.append("{}: {}  LEVEL {}".format(bold('Skill required'), italics(item['skill']['name']), item['skill']['level']))
+
+    # attr required
+    # TODO attr required
 
     # ingredients
     if 'ingredients' in item and item['ingredients']:
