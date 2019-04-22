@@ -117,6 +117,7 @@ async def item(ctx, *args):
             message.append("• {}, {}".format(italics(ingredient['name']) ,ingredient['quantity']))
     else:
         message.append('This is a raw item with no ingredients.')
+
     await ctx.send('\n'.join(message))
 
 client.run(TOKEN)
