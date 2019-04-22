@@ -5,6 +5,7 @@ from common.levenshtein import lev_biased
 
 # load items from data into dictionary, using item name as key
 def load_items():
+    print("Loading items from data...")
     items = {}
     folder = 'data/items/'
     for filename in glob.glob(folder + '*.json'):
@@ -12,7 +13,7 @@ def load_items():
             data = json.load(f)
             for item in data:
                 items[item['name']] = item
-    print("{} items loaded from file".format(len(items)))
+    print("...{} items loaded from file".format(len(items)))
     return items
 
 
