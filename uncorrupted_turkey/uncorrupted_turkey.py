@@ -3,23 +3,12 @@ import random
 
 from discord import Game, Status
 from discord.ext.commands import Bot
-from modules.levenshtein import lev_biased
+from common.discord_formatting import *
+from common.levenshtein import lev_biased
 
 BOT_PREFIX = ('!', '?')
 TOKEN = 'NTY5MTY3NzAyNDM4OTY5Mzg0.XLsvXQ.riryPznr8KknKGWv9CG8lNg2syQ'
 items = {}
-
-
-def bold(s):
-    return '**' + s + '**'
-
-
-def italics(s):
-    return '*' + s + '*'
-
-
-def turkey_message(s):
-    return ":turkey: " + s
 
 
 def load_items():
